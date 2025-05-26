@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makwills Integrated School, Inc. - Learning Through Innovation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'mis-pink': '#e9078b',
+                        'mis-blue': '#0a93d7',
+                        'mis-yellow': '#f1fb0f',
+                        'mis-orange': '#f8931f',
+                        'mis-red': '#ed1b24',
+                        'mis-green': '#3db64f',
+                    },
+                    fontFamily: {
+                        'heading': ['Poppins', 'sans-serif'],
+                        'body': ['Open Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInRight 0.8s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideInLeft: {
+                            '0%': { transform: 'translateX(-30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        slideInRight: {
+                            '0%': { transform: 'translateX(30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(-5px)' },
+                            '50%': { transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #e9078b, #0a93d7, #f1fb0f);
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Hero Section */
+        .hero-slide {
+            background-image: linear-gradient(rgba(10, 147, 215, 0.7), rgba(233, 7, 139, 0.7)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            transition: background-image 1s ease-in-out;
+        }
+        
+        /* Brand Icon Animations */
+        .hand-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        
+        .hand-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .hand-icon.skill { background-color: #e9078b; }
+        .hand-icon.power { background-color: #0a93d7; }
+        .hand-icon.action { background-color: #f1fb0f; color: #333; }
+        .hand-icon.purpose { background-color: #f8931f; }
+        .hand-icon.blessing { background-color: #ed1b24; }
+        .hand-icon.expression { background-color: #3db64f; }
+        .hand-icon.humanitarianism { background-color: #9c27b0; }
+        
+        /* Interactive Cards */
+        .program-card, .event-card {
+            transition: all 0.3s ease;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .event-card:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Testimonial Cards */
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,245,245,0.95) 100%);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Smooth Scroll Behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Custom Button Animations */
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-animate:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s;
+        }
+        
+        .btn-animate:hover:before {
+            left: 100%;
+        }
+        
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a93d7, #e9078b);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Form Enhancements */
+        .form-group {
+            position: relative;
+        }
+        
+        .form-group input:focus + label,
+        .form-group textarea:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            transform: translateY(-20px) scale(0.8);
+            color: #0a93d7;
+        }
+        
+        .form-group label {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            color: #6b7280;
+        }
+        
+        /* Responsive Enhancements */
+        @media (max-width: 768px) {
+            .hero-slide {
+                height: 60vh;
+            }
+            
+            .scroll-progress {
+                height: 3px;
+            }
+        }
+        
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-left: 4px solid #0a93d7;
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-left-color: #3db64f;
+        }
+        
+        .toast.error {
+            border-left-color: #ed1b24;
+        }
+    </style>
+</head>
+<body class="font-body text-gray-800">
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="text-center text-white">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <h2 class="font-heading text-2xl font-bold">Loading...</h2>
+            <p>Preparing your experience</p>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="flex items-center">
+            <i id="toast-icon" class="fas fa-check-circle text-green-500 mr-3"></i>
+            <div>
+                <div id="toast-title" class="font-bold">Success!</div>
+                <div id="toast-message" class="text-sm text-gray-600">Your message has been sent.</div>
+            </div>
+            <button onclick="hideToast()" class="ml-4 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50 animate-fade-in">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="flex items-center">
+<div class="flex items-center">
+    <img src="logo.jpg" alt="Makwills Integrated School Logo" class="w-12 h-12 object-contain rounded-lg shadow-sm hover:scale-110 transition-transform duration-300">
+</div>
+                    <div class="ml-3">
+                        <h1 class="font-heading font-bold text-xl text-mis-blue">MAKWILLS</h1>
+                        <p class="text-xs text-gray-600">Integrated School, Inc.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="font-medium text-mis-blue hover:text-mis-pink transition nav-link">Home</a>
+                <a href="#about" class="font-medium text-gray-700 hover:text-mis-pink transition nav-link">About Us</a>
+                <a href="#programs" class="font-medium text-gray-700 hover:text-mis-pink transition nav-link">Programs</a>
+                <a href="#campuses" class="font-medium text-gray-700 hover:text-mis-pink transition nav-link">Campuses</a>
+                <a href="#events" class="font-medium text-gray-700 hover:text-mis-pink transition nav-link">Events</a>
+                <a href="#contact" class="font-medium text-gray-700 hover:text-mis-pink transition nav-link">Contact</a>
+            </nav>
+            
+            <button onclick="openEnrollmentModal()" class="hidden md:block bg-mis-pink text-white px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition btn-animate">
+                Enroll Now
+            </button>
+            
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="font-medium text-mis-blue mobile-nav-link">Home</a>
+                <a href="#about" class="font-medium text-gray-700 mobile-nav-link">About Us</a>
+                <a href="#programs" class="font-medium text-gray-700 mobile-nav-link">Programs</a>
+                <a href="#campuses" class="font-medium text-gray-700 mobile-nav-link">Campuses</a>
+                <a href="#events" class="font-medium text-gray-700 mobile-nav-link">Events</a>
+                <a href="#contact" class="font-medium text-gray-700 mobile-nav-link">Contact</a>
+                <button onclick="openEnrollmentModal()" class="bg-mis-pink text-white px-6 py-2 rounded-full font-medium w-full btn-animate">
+                    Enroll Now
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-slide flex items-center justify-center text-center text-white">
+        <div class="container mx-auto px-4">
+            <h1 class="font-heading text-4xl md:text-6xl font-bold mb-4 animate-slide-up">Learning Through Innovation</h1>
+            <p class="text-xl md:text-2xl mb-8 animate-slide-up" style="animation-delay: 0.2s;">MIS: Your Child's Bright Future Begins Here!</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4 animate-slide-up" style="animation-delay: 0.4s;">
+                <button onclick="openEnrollmentModal()" class="bg-mis-pink hover:bg-opacity-90 text-white px-8 py-3 rounded-full font-bold text-lg transition btn-animate">
+                    Enroll Now
+                </button>
+                <button onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})" class="bg-white hover:bg-gray-100 text-mis-blue px-8 py-3 rounded-full font-bold text-lg transition btn-animate">
+                    Learn More
+                </button>
+            </div>
+            <div class="mt-12 animate-bounce-gentle">
+                <i class="fas fa-chevron-down text-2xl text-white opacity-70"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- About MIS Section -->
+    <section id="about" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-mis-blue mb-4">About Makwills Integrated School</h2>
+                <div class="w-20 h-1 bg-mis-pink mx-auto mb-6"></div>
+                <p class="text-lg max-w-3xl mx-auto">Providing quality education with a commitment to both effective and formative education at the highest standards of honorable behavior.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="animate-on-scroll">
+                    <h3 class="font-heading text-2xl font-bold text-mis-blue mb-4">Our Mission</h3>
+                    <p class="mb-6">To nurture young minds through innovative teaching methods that develop critical thinking, creativity, and character formation, preparing students to become responsible global citizens.</p>
+                    
+                    <h3 class="font-heading text-2xl font-bold text-mis-blue mb-4">Our Vision</h3>
+                    <p class="mb-6">To be a leading educational institution recognized for academic excellence, innovative learning approaches, and holistic student development.</p>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h4 class="font-heading text-xl font-bold text-mis-pink mb-3">Our Brand Mark</h4>
+                        <p class="mb-4">The colorful hands in our logo represent:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="flex items-center"><span class="hand-icon skill">S</span> Skill</div>
+                            <div class="flex items-center"><span class="hand-icon power">P</span> Power</div>
+                            <div class="flex items-center"><span class="hand-icon action">A</span> Action</div>
+                            <div class="flex items-center"><span class="hand-icon purpose">P</span> Purpose</div>
+                            <div class="flex items-center"><span class="hand-icon blessing">B</span> Blessing</div>
+                            <div class="flex items-center"><span class="hand-icon expression">E</span> Expression</div>
+                            <div class="flex items-center"><span class="hand-icon humanitarianism">H</span> Humanitarianism</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative animate-on-scroll">
+                    <img src="https://scontent.fcrk3-4.fna.fbcdn.net/v/t39.30808-6/487751224_1158676842718575_6248503795103091450_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeH6LB2EqFw7apBCrLTcK_1t-c5Pj8jyG1r5zk-PyPIbWr4LZh9-0kE9Ivopl4TT3kCUtIQA9EU_WQMgeIdl9AoI&_nc_ohc=RKRaZLho6EwQ7kNvwE2RFS7&_nc_oc=AdliPJ-HFaumoah6ucyyN_E-yIGa4mTGQ6cs-0oG-Lzi5olWZ-J1caKUy9jpqUwMTXV2pUg_YwswYxb6rpRUGl0Y&_nc_zt=23&_nc_ht=scontent.fcrk3-4.fna&_nc_gid=NKEHjJ6n2t_UnARVnTBNUg&oh=00_AfLv6-WKuVjiKjvBgkXpZyBzJqN2ey2P2SOCd8NzHfUQLg&oe=683A42DC" alt="Students at Makwills Integrated School" class="rounded-lg shadow-lg w-full">
+                    <div class="absolute -bottom-6 -right-6 bg-mis-yellow p-4 rounded-lg shadow-lg w-2/3 animate-slide-in-right">
+                        <h4 class="font-heading font-bold text-lg text-gray-800">Since 2013</h4>
+                        <p class="text-gray-700">Providing quality education for over a decade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section id="programs" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-mis-blue mb-4">Our Programs</h2>
+                <div class="w-20 h-1 bg-mis-pink mx-auto mb-6"></div>
+                <p class="text-lg max-w-3xl mx-auto">We offer comprehensive educational programs designed to meet the needs of students at every stage of their development.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Preschool -->
+                <div class="program-card bg-gray-50 rounded-lg overflow-hidden shadow-md transition duration-300 animate-on-scroll">
+                    <div class="h-48 bg-mis-pink flex items-center justify-center">
+                        <i class="fas fa-child text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-2xl font-bold text-mis-blue mb-3">Preschool</h3>
+                        <p class="text-gray-600 mb-4">Our preschool program focuses on early childhood development through play-based learning, fostering curiosity and social skills.</p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Age-appropriate curriculum</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Social-emotional development</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Early literacy & numeracy</span>
+                            </li>
+                        </ul>
+                        <button onclick="showProgramDetails('preschool')" class="text-mis-pink font-medium hover:underline">Learn More →</button>
+                    </div>
+                </div>
+                
+                <!-- Elementary -->
+                <div class="program-card bg-gray-50 rounded-lg overflow-hidden shadow-md transition duration-300 animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="h-48 bg-mis-blue flex items-center justify-center">
+                        <i class="fas fa-school text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-2xl font-bold text-mis-blue mb-3">Elementary</h3>
+                        <p class="text-gray-600 mb-4">Our elementary program builds strong academic foundations while encouraging creativity and independent thinking.</p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Core subject mastery</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Project-based learning</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Character development</span>
+                            </li>
+                        </ul>
+                        <button onclick="showProgramDetails('elementary')" class="text-mis-pink font-medium hover:underline">Learn More →</button>
+                    </div>
+                </div>
+                
+                <!-- Junior High -->
+                <div class="program-card bg-gray-50 rounded-lg overflow-hidden shadow-md transition duration-300 animate-on-scroll" style="animation-delay: 0.4s;">
+                    <div class="h-48 bg-mis-yellow flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-gray-800 text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-2xl font-bold text-mis-blue mb-3">Junior High School</h3>
+                        <p class="text-gray-600 mb-4">Our junior high program prepares students for senior high with rigorous academics and leadership opportunities.</p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>Advanced coursework</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>STEM & arts integration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-mis-green mt-1 mr-2"></i>
+                                <span>College preparation</span>
+                            </li>
+                        </ul>
+                        <button onclick="showProgramDetails('juniorhigh')" class="text-mis-pink font-medium hover:underline">Learn More →</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pediatric Therapy Center -->
+            <div class="mt-16 bg-gradient-to-r from-mis-blue to-mis-pink rounded-lg overflow-hidden shadow-lg animate-on-scroll">
+                <div class="grid md:grid-cols-2">
+                    <div class="p-8 md:p-12 text-white">
+                        <h3 class="font-heading text-2xl md:text-3xl font-bold mb-4">MAKWILLS Pediatric Therapy Center</h3>
+                        <p class="mb-6">Specialized services to support children with unique learning needs, including Applied Behavior Analysis (ABA), Speech & Language Therapy, and Special Education (SPED).</p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-comment-medical text-xl mr-3"></i>
+                                <span>Speech Therapy</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-hands-helping text-xl mr-3"></i>
+                                <span>ABA Therapy</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-user-graduate text-xl mr-3"></i>
+                                <span>SPED Programs</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-brain text-xl mr-3"></i>
+                                <span>Occupational Therapy</span>
+                            </div>
+                        </div>
+                        <button onclick="scheduleEvaluation()" class="bg-white text-mis-blue px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition btn-animate">
+                            Schedule Evaluation
+                        </button>
+                    </div>
+                    <div class="hidden md:block bg-cover bg-center" style="background-image: url('https://scontent.fcrk3-1.fna.fbcdn.net/v/t39.30808-6/471181979_122132901866453021_721091810123975535_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeH8CX5wazI7uLtmBQ18fbWBHbgak4BEvP8duBqTgES8_1pWQdSvEk-4YuHRUYqaUK3Hx-1Rd8hShDKNuE_9VeGO&_nc_ohc=XEUg-hHghQ4Q7kNvwHwuNUs&_nc_oc=AdmiGrTmlfwENRfEOnIQB7VIOchshrDwFh1Nw_NVeHZMpk4A13bltImOCGIO4Wx2JbvYRC8DTiNPtDgjGuOgAP93&_nc_zt=23&_nc_ht=scontent.fcrk3-1.fna&_nc_gid=CvO9xsBfRSZFzVHQoW2A8g&oh=00_AfIw8p3pgLHGK3nBtmMGAmG-vH1G7oR6OOByzP3r3dUf0A&oe=683A5D81');"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose MIS Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-mis-blue mb-4">Why Choose MIS?</h2>
+                <div class="w-20 h-1 bg-mis-pink mx-auto mb-6"></div>
+                <p class="text-lg max-w-3xl mx-auto">Discover what makes Makwills Integrated School the right choice for your child's education.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-md text-center animate-on-scroll">
+                    <div class="w-16 h-16 bg-mis-pink bg-opacity-10 text-mis-pink text-2xl rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-mis-blue mb-3">Innovative Learning</h3>
+                    <p class="text-gray-600">We employ cutting-edge teaching methodologies that go beyond traditional classroom instruction.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="w-16 h-16 bg-mis-yellow bg-opacity-10 text-mis-yellow text-2xl rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-mis-blue mb-3">Holistic Development</h3>
+                    <p class="text-gray-600">We nurture academic excellence alongside character formation and social skills.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center animate-on-scroll" style="animation-delay: 0.3s;">
+                    <div class="w-16 h-16 bg-mis-orange bg-opacity-10 text-mis-orange text-2xl rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-mis-blue mb-3">Technology Integration</h3>
+                    <p class="text-gray-600">Modern facilities and digital tools enhance the learning experience.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center animate-on-scroll" style="animation-delay: 0.4s;">
+                    <div class="w-16 h-16 bg-mis-green bg-opacity-10 text-mis-green text-2xl rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-mis-blue mb-3">Individual Attention</h3>
+                    <p class="text-gray-600">Small class sizes ensure personalized learning for every student.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-md text-center animate-on-scroll" style="animation-delay: 0.5s;">
+                    <div class="w-16 h-16 bg-mis-red bg-opacity-10 text-mis-red text-2xl rounded-full flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="font-heading text-xl font-bold text-mis-blue mb-3">Proven Results</h3>
+                    <p class="text-gray-600">Our students consistently achieve academic excellence and personal growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-mis-blue mb-4">Upcoming Events</h2>
+                <div class="w-20 h-1 bg-mis-pink mx-auto mb-6"></div>
+                <p class="text-lg max-w-3xl mx-auto">Join us for exciting events that celebrate learning, creativity, and community.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Foundation Day -->
+                <div class="event-card bg-white rounded-lg overflow-hidden shadow-lg border border-gray-100 transition duration-300 animate-on-scroll">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://scontent.fcrk3-3.fna.fbcdn.net/v/t39.30808-6/487482911_1158677329385193_1845105124820056893_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFhTd4CkGJvU-X3wOsfRbhXwy4S8M-f2VfDLhLwz5_ZV_e-Rtz-H0gBmV3yNRa55sbkaC4XcW4kWgppX0rPXikR&_nc_ohc=4MO6qX9NGB8Q7kNvwG7Af0w&_nc_oc=AdnYWSqc4ruJI62DTi8fG1lzV-G6-qtLutm9xPsKTalYC5gw8xLO3vVyjCofAVa6xMZ97Jz2GTsvpWhCEvjiNDpN&_nc_zt=23&_nc_ht=scontent.fcrk3-3.fna&_nc_gid=YYtUzeqdBos5fRbyFF07uA&oh=00_AfI7MK1L21k8_7RRDx9OyZQ2VFhlQYs7Cd0x4qBMIDDMSw&oe=683A3F0E');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="inline-block px-3 py-1 bg-mis-pink bg-opacity-10 text-mis-pink text-sm rounded-full mb-2">March 27, 2025</span>
+                                <h3 class="font-heading text-xl font-bold text-mis-blue">10th Foundation Day</h3>
+                            </div>
+                            <div class="bg-mis-yellow text-gray-800 px-3 py-1 rounded-full text-sm font-bold">Annual Event</div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Celebrating a decade of educational excellence with special activities and performances.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-day text-mis-orange mr-2"></i>
+                                <span class="text-sm">Day 1: Field Demonstration & Regional Foods Fest</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-day text-mis-orange mr-2"></i>
+                                <span class="text-sm">Day 2: Pre-pageant, Makwills Got Talent & Sports Festival</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-day text-mis-orange mr-2"></i>
+                                <span class="text-sm">Day 4: Search for Little Mr. & Miss Makwills</span>
+                            </div>
+                        </div>
+                        <button onclick="showEventDetails('foundation-day')" class="text-mis-pink font-medium hover:underline">View Details →</button>
+                    </div>
+                </div>
+                
+                <!-- Summer Break Promo -->
+                <div class="event-card bg-white rounded-lg overflow-hidden shadow-lg border border-gray-100 transition duration-300 animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://scontent.fcrk3-3.fna.fbcdn.net/v/t39.30808-6/499887389_1194525215800404_6503776209483789231_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeHzvYXi1QjVf1e_eN_CYpW_Gbty2EG8EyoZu3LYQbwTKkyzvYtEcuW28Ra3a9dOs4cpcQoXv_ZaKzwNKLYbcB1Q&_nc_ohc=1SFIgTtqtiQQ7kNvwHuCRKR&_nc_oc=Adnk9_oi_I3psBY-VLRS96LFxa8CwJ_7Brp9ChpuudwkZgikKhnpkyjpicspXiuKugq6LYeRqoAjPW7g0pbQVEcN&_nc_zt=23&_nc_ht=scontent.fcrk3-3.fna&_nc_gid=3lXTTBPUD_H9tWRDWytQhQ&oh=00_AfJxtCsSgulGV9XnYDgfBA_a0WSDA7NQ0PMNbmyWUxUJ9Q&oe=683A314E');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="inline-block px-3 py-1 bg-mis-blue bg-opacity-10 text-mis-blue text-sm rounded-full mb-2">May 24-31, 2025</span>
+                                <h3 class="font-heading text-xl font-bold text-mis-blue">Summer Break Promo</h3>
+                            </div>
+                            <div class="bg-mis-pink text-white px-3 py-1 rounded-full text-sm font-bold">Special Offer</div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Exclusive discounts and giveaways for early enrollment.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-percent text-mis-green mr-2"></i>
+                                <span class="text-sm">50% monthly discount</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-percent text-mis-green mr-2"></i>
+                                <span class="text-sm">35% quarterly discount</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-percent text-mis-green mr-2"></i>
+                                <span class="text-sm">25% semi-annual discount</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-gift text-mis-red mr-2"></i>
+                                <span class="text-sm">Free MIS Tumbler & Tote Bag</span>
+                            </div>
+                        </div>
+                        <button onclick="showEventDetails('summer-promo')" class="text-mis-pink font-medium hover:underline">View Details →</button>
+                    </div>
+                </div>
+                
+                <!-- Free SPED Screening -->
+                <div class="event-card bg-white rounded-lg overflow-hidden shadow-lg border border-gray-100 transition duration-300 animate-on-scroll" style="animation-delay: 0.4s;">
+                    <div class="h-48 bg-cover bg-center" style="background-image: url('https://scontent.fcrk3-1.fna.fbcdn.net/v/t39.30808-6/480669328_1127919635794296_6975121386293287014_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFZEiOAou1qdvqwdkpSG73DXMU2tRi3h4RcxTa1GLeHhHgveaKhi3WFj0eK0CB4bSQm65lH5QR2Hrh4Mjb2ZCTB&_nc_ohc=rn-K6YkP7f4Q7kNvwEbiD8O&_nc_oc=AdnxiOzhCmZIlWt9RReX5tHxnf1Exr31A5AEcCclCpK5n0RMzCsTP8-EKhLoILfXhEm5uw84V4Pf05VJFDE421O4&_nc_zt=23&_nc_ht=scontent.fcrk3-1.fna&_nc_gid=lgnJ_g_jpQvUiamaPpkuag&oh=00_AfKxyOXEem1iIOEYUtqA6F00VqB2uv667Ewb8bYxSH-63g&oe=683A5AA5');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <span class="inline-block px-3 py-1 bg-mis-green bg-opacity-10 text-mis-green text-sm rounded-full mb-2">March 21 & 28, 2025</span>
+                                <h3 class="font-heading text-xl font-bold text-mis-blue">𝐋𝐢𝐭𝐭𝐥𝐞 𝐌𝐫. 𝐚𝐧𝐝 𝐌𝐬. 𝐌𝐚𝐤𝐰𝐢𝐥𝐥𝐬, 𝟐𝟎𝟐𝟒</h3>
+                            </div>
+                            <div class="bg-mis-blue text-white px-3 py-1 rounded-full text-sm font-bold">The battle of 𝙥𝙤𝙥𝙪𝙡𝙖𝙧𝙞𝙩𝙮, 𝙗𝙚𝙖𝙪𝙩𝙮 and 𝙩𝙖𝙡𝙚𝙣𝙩𝙨 continues! 
+</div>
+                        </div>
+                        <p class="text-gray-600 mb-4">𝗧𝗵𝗲 𝗵𝗶𝗴𝗵𝗹𝘆 𝗮𝗻𝘁𝗶𝗰𝗶𝗽𝗮𝘁𝗲𝗱 Mr and Ms Makwills, 2024 coronation held last March 22, 2024 at Imus City Mall - Anabu was an 𝗲𝘅𝘁𝗿𝗮𝗼𝗿𝗱𝗶𝗻𝗮𝗿𝘆 𝘀𝘂𝗰𝗰𝗲𝘀𝘀. The event drew an 𝗼𝘃𝗲𝗿𝘄𝗵𝗲𝗹𝗺𝗶𝗻𝗴 𝘁𝘂𝗿𝗻𝗼𝘂𝘁 𝗼𝗳 𝘀𝘂𝗽𝗽𝗼𝗿𝘁 from parents, batchmates, and friends, creating an 𝗮𝘁𝗺𝗼𝘀𝗽𝗵𝗲𝗿𝗲 𝗼𝗳 𝗳𝗲𝘀𝘁𝗶𝘃𝗶𝘁𝘆.
+.</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-user-md text-mis-pink mr-2"></i>
+                                <span class="text-sm">The 𝙙𝒆𝙙𝒊𝙘𝒂𝙩𝒊𝙤𝒏 and 𝙝𝒂𝙧𝒅 𝙬𝒐𝙧𝒌 put forth by the organizing committee, judges, and candidates were instrumental in 𝙢𝙖𝙠𝙞𝙣𝙜 𝙩𝙝𝙚 𝙚𝙫𝙚𝙣𝙩 𝙖 𝙜𝙧𝙖𝙣𝙙 𝙩𝙧𝙞𝙪𝙢𝙥𝙝.
+</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-mis-pink mr-2"></i>
+                                <span class="text-sm">The celebration not only showcased the excellence within the community but also strengthened the 𝙨𝙚𝙣𝙨𝙚 𝙤𝙛 𝙪𝙣𝙞𝙩𝙮 and pride among its members.
+</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-info-circle text-mis-pink mr-2"></i>
+                                <span class="text-sm">𝗖𝗼𝗻𝗴𝗿𝗮𝘁𝘂𝗹𝗮𝘁𝗶𝗼𝗻𝘀 𝘁𝗼 𝗮𝗹𝗹 𝘁𝗵𝗲 𝘄𝗶𝗻𝗻𝗲𝗿𝘀!!!
+</span>
+                            </div>
+                        </div>
+                        <button onclick="showEventDetails('foundation-day')" class="text-mis-pink font-medium hover:underline">View Details →</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 animate-on-scroll">
+                <button onclick="showAllEvents()" class="bg-mis-blue text-white px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition btn-animate">
+                    View All Events
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gradient-to-r from-mis-blue to-mis-pink">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">What Parents Say</h2>
+                <div class="w-20 h-1 bg-white bg-opacity-50 mx-auto mb-6"></div>
+                <p class="text-white text-opacity-90 text-lg max-w-3xl mx-auto">Hear from our community about their experiences with Makwills Integrated School.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="testimonial-card p-8 rounded-lg shadow-lg animate-on-scroll">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-mis-pink bg-opacity-10 flex items-center justify-center text-mis-pink text-xl mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-mis-blue">Maria Santos</h4>
+                            <p class="text-sm text-gray-600">Parent of Grade 3 Student</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"The teachers at MIS go above and beyond to ensure each child's needs are met. My daughter has flourished academically and socially since joining."</p>
+                    <div class="flex text-mis-yellow">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg shadow-lg animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-mis-blue bg-opacity-10 flex items-center justify-center text-mis-blue text-xl mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-mis-blue">James Rodriguez</h4>
+                            <p class="text-sm text-gray-600">Parent of Preschooler</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"The innovative teaching methods at MIS have made learning fun for my son. He's always excited to go to school and share what he's learned."</p>
+                    <div class="flex text-mis-yellow">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg shadow-lg animate-on-scroll" style="animation-delay: 0.4s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-mis-green bg-opacity-10 flex items-center justify-center text-mis-green text-xl mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-mis-blue">Lourdes Tan</h4>
+                            <p class="text-sm text-gray-600">Parent of Junior High Student</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"The holistic approach to education at MIS has helped my daughter develop not just academically, but as a well-rounded individual with strong values."</p>
+                    <div class="flex text-mis-yellow">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campuses Section -->
+    <section id="campuses" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-mis-blue mb-4">Our Campuses</h2>
+                <div class="w-20 h-1 bg-mis-pink mx-auto mb-6"></div>
+                <p class="text-lg max-w-3xl mx-auto">Makwills Integrated School has two convenient locations serving families in Imus City.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Main Campus -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-lg animate-on-scroll">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('main.png');"></div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-2xl font-bold text-mis-blue mb-2">Main Campus</h3>
+                        <p class="text-gray-600 mb-4">Blk 4 Lot 1 & 3 The Legian 2 South, Carsadang Bago 2, Imus City</p>
+                        
+                        <div class="mb-6">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3864.6588169302054!2d120.9228766!3d14.3891414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d36b0bade2f9%3A0xc5ed22ffefea48ba!2sMakwills%20Integrated%20School%20Inc!5e0!3m2!1sen!2sph!4v1748263001021!5m2!1sen!2sph" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <a href="tel:+6321234567" class="flex items-center text-gray-700 hover:text-mis-pink transition">
+                                <i class="fas fa-phone-alt mr-2"></i>
+                                <span>(02) 123-4567</span>
+                            </a>
+                            <a href="mailto:main@makwills.edu.ph" class="flex items-center text-gray-700 hover:text-mis-pink transition">
+                                <i class="fas fa-envelope mr-2"></i>
+                                <span>main@makwills.edu.ph</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jade Campus -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-lg animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('https://scontent.fcrk3-4.fna.fbcdn.net/v/t39.30808-6/490114635_2440745362946958_3697738869184832101_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=86c6b0&_nc_eui2=AeF1KcsDpXCsTytuaRl-oX9HcsX4BxLv8gNyxfgHEu_yAzikbXqDQgELuQ_uRyulN9SOLqIEOPFZCrFrUe9rOTiZ&_nc_ohc=NYI1NeVZRWwQ7kNvwGK1X08&_nc_oc=Adl4sh4_FDelRAZq1LGKkjTbKo8tshhjWCq-peLA6vawBNvsiXp3n5o6dlvNG_ZkB_NdvlGV7EXabg7QMznH285_&_nc_zt=23&_nc_ht=scontent.fcrk3-4.fna&_nc_gid=Xngi9KsjCNYKE526sx66_g&oh=00_AfLpGuUNTDpBv1Z_SDp62_QO4HWUz7Jbged3YCiZwnoYFA&oe=683A5368');"></div>
+                    <div class="p-6">
+                        <h3 class="font-heading text-2xl font-bold text-mis-blue mb-2">Jade Campus</h3>
+                        <p class="text-gray-600 mb-4">Blk 27 Lot 42–45 MAP 2, Jade Residences, Malagasang 1‑G, Imus City</p>
+                        
+                        <div class="mb-6">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30914.84571848673!2d120.90838951045716!3d14.40664641719551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d3946008dd3b%3A0x94aff08ab2e4ffc5!2sMakwils%20Intergated%20School%20(MIS)!5e0!3m2!1sen!2sph!4v1748263146959!5m2!1sen!2sph" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-4">
+                            <a href="tel:+6327654321" class="flex items-center text-gray-700 hover:text-mis-pink transition">
+                                <i class="fas fa-phone-alt mr-2"></i>
+                                <span>(02) 765-4321</span>
+                            </a>
+                            <a href="mailto:jade@makwills.edu.ph" class="flex items-center text-gray-700 hover:text-mis-pink transition">
+                                <i class="fas fa-envelope mr-2"></i>
+                                <span>jade@makwills.edu.ph</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions CTA Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-xl shadow-xl overflow-hidden animate-on-scroll">
+                <div class="grid md:grid-cols-2">
+                    <div class="p-12 bg-mis-blue text-white">
+                        <h2 class="font-heading text-3xl font-bold mb-6">Ready to Join the MIS Family?</h2>
+                        <p class="mb-8">Begin your child's educational journey with Makwills Integrated School today. Our admissions team is ready to guide you through the enrollment process.</p>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-mis-yellow mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-heading font-bold mb-1">Simple Enrollment Process</h4>
+                                    <p class="text-white text-opacity-90">Easy steps to secure your child's spot</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-mis-yellow mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-heading font-bold mb-1">Flexible Payment Options</h4>
+                                    <p class="text-white text-opacity-90">Various plans to suit your budget</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-mis-yellow mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-heading font-bold mb-1">Ongoing Enrollment Support</h4>
+                                    <p class="text-white text-opacity-90">We're here to help every step of the way</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="downloadAdmissionForms()" class="bg-mis-yellow text-gray-800 px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition btn-animate">
+                            Download Admission Forms
+                        </button>
+                    </div>
+                    
+                    <div class="p-12">
+                        <h3 class="font-heading text-2xl font-bold text-mis-blue mb-6">Admission Requirements</h3>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-heading font-bold text-mis-pink mb-2">For Preschool</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>Birth Certificate (PSA)</li>
+                                    <li>2×2 ID Picture (2 copies)</li>
+                                    <li>Medical Certificate</li>
+                                    <li>Report Card (for transferees)</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-heading font-bold text-mis-pink mb-2">For Elementary & Junior High</h4>
+                                <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                    <li>Birth Certificate (PSA)</li>
+                                    <li>Form 138 (Report Card)</li>
+                                    <li>Good Moral Certificate</li>
+                                    <li>2×2 ID Picture (2 copies)</li>
+                                    <li>Medical Certificate</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-mis-pink bg-opacity-10 p-4 rounded-lg">
+                                <h4 class="font-heading font-bold text-mis-pink mb-2">Important Dates</h4>
+                                <div class="flex items-center mb-1">
+                                    <i class="fas fa-calendar-day text-mis-pink mr-2"></i>
+                                    <span>Early Enrollment: May 1-31, 2025</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-calendar-day text-mis-pink mr-2"></i>
+                                    <span>School Year Begins: June 3, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 animate-on-scroll">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-mis-blue mb-4">Contact Us</h2>
+                <div class="w-20 h-1 bg-mis-pink mx-auto mb-6"></div>
+                <p class="text-lg max-w-3xl mx-auto">We'd love to hear from you! Reach out with any questions or to schedule a campus tour.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="animate-on-scroll">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder=" " class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue focus:border-transparent" required>
+                                <label for="name">Full Name</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder=" " class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue focus:border-transparent" required>
+                                <label for="email">Email Address</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="text" id="subject" name="subject" placeholder=" " class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue focus:border-transparent" required>
+                            <label for="subject">Subject</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" placeholder=" " class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue focus:border-transparent resize-none" required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        
+                        <button type="submit" class="bg-mis-pink text-white px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition w-full md:w-auto btn-animate">
+                            <span class="btn-text">Send Message</span>
+                            <i class="fas fa-spinner fa-spin ml-2 hidden loading-icon"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="space-y-8 animate-on-scroll" style="animation-delay: 0.2s;">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-mis-blue bg-opacity-10 text-mis-blue text-xl rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-lg text-mis-blue mb-2">Visit Our Campuses</h4>
+                            <p class="text-gray-600">Main Campus: Blk 4 Lot 1 & 3 The Legian 2 South, Carsadang Bago 2, Imus City</p>
+                            <p class="text-gray-600">Jade Campus: Blk 27 Lot 42–45 MAP 2, Jade Residences, Malagasang 1‑G, Imus City</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-mis-pink bg-opacity-10 text-mis-pink text-xl rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-lg text-mis-blue mb-2">Call Us</h4>
+                            <p class="text-gray-600">Main Campus: (02) 123-4567</p>
+                            <p class="text-gray-600">Jade Campus: (02) 765-4321</p>
+                            <p class="text-gray-600">Mobile: +63 912 345 6789</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-mis-yellow bg-opacity-10 text-mis-yellow text-xl rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-lg text-mis-blue mb-2">Email Us</h4>
+                            <p class="text-gray-600">General Inquiries: info@makwills.edu.ph</p>
+                            <p class="text-gray-600">Admissions: admissions@makwills.edu.ph</p>
+                            <p class="text-gray-600">Therapy Center: therapy@makwills.edu.ph</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-mis-green bg-opacity-10 text-mis-green text-xl rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-lg text-mis-blue mb-2">Office Hours</h4>
+                            <p class="text-gray-600">Monday to Friday: 7:30 AM - 5:00 PM</p>
+                            <p class="text-gray-600">Saturday: 8:00 AM - 12:00 PM</p>
+                            <p class="text-gray-600">Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 bg-gradient-to-r from-mis-blue to-mis-pink text-white">
+        <div class="container mx-auto px-4 text-center animate-on-scroll">
+            <h2 class="font-heading text-2xl md:text-3xl font-bold mb-4">Stay Updated with MIS News</h2>
+            <p class="max-w-2xl mx-auto mb-8 text-white text-opacity-90">Subscribe to our newsletter for the latest updates, events, and educational resources.</p>
+            
+            <form id="newsletter-form" class="max-w-md mx-auto flex">
+                <input type="email" name="newsletter-email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800" required>
+                <button type="submit" class="bg-mis-yellow text-gray-800 px-6 py-3 rounded-r-lg font-bold hover:bg-opacity-90 transition btn-animate">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="animate-on-scroll">
+                    <div class="flex items-center mb-4">
+                        <div class="flex -space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-mis-pink"></div>
+                            <div class="w-8 h-8 rounded-full bg-mis-blue"></div>
+                            <div class="w-8 h-8 rounded-full bg-mis-yellow"></div>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="font-heading font-bold text-xl text-white">MAKWILLS</h3>
+                            <p class="text-xs text-gray-400">Integrated School, Inc.</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4">Learning Through Innovation</p>
+                    <p class="text-gray-400">MIS: Your Child's Bright Future Begins Here!</p>
+                </div>
+                
+                <div class="animate-on-scroll" style="animation-delay: 0.1s;">
+                    <h4 class="font-heading font-bold text-lg text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#programs" class="text-gray-400 hover:text-white transition">Programs</a></li>
+                        <li><a href="#campuses" class="text-gray-400 hover:text-white transition">Campuses</a></li>
+                        <li><a href="#events" class="text-gray-400 hover:text-white transition">Events</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="animate-on-scroll" style="animation-delay: 0.2s;">
+                    <h4 class="font-heading font-bold text-lg text-white mb-4">Programs</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" onclick="showProgramDetails('preschool')" class="text-gray-400 hover:text-white transition">Preschool</a></li>
+                        <li><a href="#" onclick="showProgramDetails('elementary')" class="text-gray-400 hover:text-white transition">Elementary</a></li>
+                        <li><a href="#" onclick="showProgramDetails('juniorhigh')" class="text-gray-400 hover:text-white transition">Junior High School</a></li>
+                        <li><a href="#" onclick="scheduleEvaluation()" class="text-gray-400 hover:text-white transition">Pediatric Therapy Center</a></li>
+                        <li><a href="#" onclick="showEventDetails('summer-promo')" class="text-gray-400 hover:text-white transition">Summer Programs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="animate-on-scroll" style="animation-delay: 0.3s;">
+                    <h4 class="font-heading font-bold text-lg text-white mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" onclick="openSocialLink('facebook')" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-mis-blue transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" onclick="openSocialLink('instagram')" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-mis-pink transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" onclick="openSocialLink('twitter')" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-400 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" onclick="openSocialLink('youtube')" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-500 transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                    
+                    <h5 class="font-medium text-white mb-2">Email Us</h5>
+                    <p class="text-gray-400 mb-4">info@makwills.edu.ph</p>
+                    
+                    <h5 class="font-medium text-white mb-2">Call Us</h5>
+                    <p class="text-gray-400">(02) 123-4567</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Makwills Integrated School, Inc. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" onclick="showPrivacyPolicy()" class="text-gray-500 text-sm hover:text-white transition">Privacy Policy</a>
+                        <a href="#" onclick="showTermsOfService()" class="text-gray-500 text-sm hover:text-white transition">Terms of Service</a>
+                        <a href="#" onclick="showSitemap()" class="text-gray-500 text-sm hover:text-white transition">Sitemap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Enrollment Modal -->
+    <div id="enrollment-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-heading text-2xl font-bold text-mis-blue">Start Your Enrollment</h3>
+                    <button onclick="closeEnrollmentModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="enrollment-form" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Parent/Guardian Name</label>
+                        <input type="text" name="parent-name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Child's Name</label>
+                        <input type="text" name="child-name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Grade Level</label>
+                        <select name="grade-level" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue" required>
+                            <option value="">Select Grade Level</option>
+                            <option value="preschool">Preschool</option>
+                            <option value="kindergarten">Kindergarten</option>
+                            <option value="grade-1">Grade 1</option>
+                            <option value="grade-2">Grade 2</option>
+                            <option value="grade-3">Grade 3</option>
+                            <option value="grade-4">Grade 4</option>
+                            <option value="grade-5">Grade 5</option>
+                            <option value="grade-6">Grade 6</option>
+                            <option value="grade-7">Grade 7</option>
+                            <option value="grade-8">Grade 8</option>
+                            <option value="grade-9">Grade 9</option>
+                            <option value="grade-10">Grade 10</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Campus Preference</label>
+                        <select name="campus" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue" required>
+                            <option value="">Select Campus</option>
+                            <option value="main">Main Campus - Carsadang Bago</option>
+                            <option value="jade">Jade Campus - Malagasang</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Contact Number</label>
+                        <input type="tel" name="contact-number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+                        <input type="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-mis-blue" required>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-mis-pink text-white py-3 rounded-lg font-bold hover:bg-opacity-90 transition btn-animate">
+                        Submit Enrollment Inquiry
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global Variables
+        let currentSlide = 0;
+        const heroImages = [
+            'https://scontent.fcrk3-4.fna.fbcdn.net/v/t39.30808-6/481916037_1139203701332556_7808049783022650130_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeHdP2fEIIhOJ9FMRpHj0K8sqlWCXMKLhP2qVYJcwouE_dOwAIcWkdDKhh8b14_m8V4YTdp84JY4RPIrOHUsn0oi&_nc_ohc=uMi4JH9axIcQ7kNvwEK_xhm&_nc_oc=Adlw-jDR_lt0G8dVEpym51LxXh_k-bE8zYoYtKWGmEmCH7VqVlHQPABVW0Y2HvPl7ymoe2hDB7WL8xDaDxMhI3Xa&_nc_zt=23&_nc_ht=scontent.fcrk3-4.fna&_nc_gid=n-ZH_C6fmvd6cmmxdZeQzw&oh=00_AfKWUkU_nsN10LcXvXilHrwoGu71VfnvssPuGgkZFnqXzw&oe=683A3A62',
+            'https://scontent.fcrk3-3.fna.fbcdn.net/v/t39.30808-6/480880778_1133886045197655_7620018914029498032_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFYTne0cwYKaou0sjbqKmfwpsDdPJFCUtOmwN08kUJS05KqKRyn6gK0fiPRVc1OOvuCPDTpXd518DwFFfXCHGiO&_nc_ohc=4YBPdlWS_0YQ7kNvwFOCe5C&_nc_oc=Adk35StfxmL9JZ0KIndcbwbJmJn8VZQJE8-KbuLBx4aAHlo7LZfu8YwbNsizzZny1coSDuY_OcLfvwa337LxhZbL&_nc_zt=23&_nc_ht=scontent.fcrk3-3.fna&_nc_gid=KYKScE23GTpJhQOoMA8jVQ&oh=00_AfKheX4OL0pl8OHiPIMgg5fgXNAAwt9kjFGqQdkUd6VUag&oe=683A5771',
+            'https://scontent.fcrk3-1.fna.fbcdn.net/v/t39.30808-6/480641463_1127668205819439_6672632075679619495_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_eui2=AeFrGDCPoc78wEmaobAnHaOYe-SQ8ZIq33h75JDxkirfeMQ_PnUODgGUB8BAU5xRNx7Ii1T_OUOCbgXnrmdgw4u7&_nc_ohc=6Rt4-qyoFOEQ7kNvwE41MCe&_nc_oc=AdlpqohZpjf8JKXYoAWGIPlwt25EULVFfqCGylYPwWHD882pXYElh2akLu0yBPbwDyA5WZkn0D43kJgZU8hlRTfZ&_nc_zt=23&_nc_ht=scontent.fcrk3-1.fna&_nc_gid=qe35lV1NaZFNCmEL8IoV0g&oh=00_AfJ57Sojt_WSbV6pn3GFmh0-kBTE2nJDJbtS9j1WpwoDdg&oe=683A5EE0'
+        ];
+
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loading-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading-overlay').style.display = 'none';
+                }, 500);
+            }, 1500);
+        });
+
+        // Scroll Progress Indicator
+        function updateScrollProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scroll-progress').style.width = scrollPercent + '%';
+        }
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Initialize scroll animations
+        function initScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            animatedElements.forEach(el => observer.observe(el));
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        function initSmoothScrolling() {
+            const links = document.querySelectorAll('a[href^="#"], .nav-link, .mobile-nav-link');
+            links.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#' || targetId === '#home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        return;
+                    }
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const offsetTop = targetElement.offsetTop - 80; // Account for fixed header
+                        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                        
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        }
+
+        // Hero background slider
+        function changeHeroBackground() {
+            currentSlide = (currentSlide + 1) % heroImages.length;
+            const heroSection = document.querySelector('.hero-slide');
+            heroSection.style.backgroundImage = `linear-gradient(rgba(10, 147, 215, 0.7), rgba(233, 7, 139, 0.7)), url('${heroImages[currentSlide]}')`;
+        }
+
+        // Toast Notifications
+        function showToast(title, message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const titleEl = document.getElementById('toast-title');
+            const messageEl = document.getElementById('toast-message');
+            
+            // Set content
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            
+            // Set style based on type
+            toast.className = `toast ${type}`;
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle text-green-500 mr-3';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle text-red-500 mr-3';
+            } else if (type === 'info') {
+                icon.className = 'fas fa-info-circle text-blue-500 mr-3';
+            }
+            
+            // Show toast
+            toast.classList.add('show');
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                hideToast();
+            }, 5000);
+        }
+
+        function hideToast() {
+            document.getElementById('toast').classList.remove('show');
+        }
+
+        // Modal Functions
+        function openEnrollmentModal() {
+            document.getElementById('enrollment-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEnrollmentModal() {
+            document.getElementById('enrollment-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Form Handlers
+        function handleContactForm(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const loadingIcon = submitBtn.querySelector('.loading-icon');
+            
+            // Show loading state
+            btnText.textContent = 'Sending...';
+            loadingIcon.classList.remove('hidden');
+            submitBtn.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Reset button state
+                btnText.textContent = 'Send Message';
+                loadingIcon.classList.add('hidden');
+                submitBtn.disabled = false;
+                
+                // Show success message
+                showToast('Message Sent!', 'Thank you for your inquiry. We will get back to you soon.', 'success');
+                
+                // Reset form
+                e.target.reset();
+            }, 2000);
+        }
+
+        function handleEnrollmentForm(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            // Simulate form submission
+            setTimeout(() => {
+                closeEnrollmentModal();
+                showToast('Enrollment Inquiry Submitted!', 'Our admissions team will contact you within 24 hours.', 'success');
+                e.target.reset();
+            }, 1000);
+        }
+
+        function handleNewsletterForm(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input[name="newsletter-email"]').value;
+            
+            // Simulate subscription
+            setTimeout(() => {
+                showToast('Subscribed!', 'Thank you for subscribing to our newsletter.', 'success');
+                e.target.reset();
+            }, 1000);
+        }
+
+        // Content Functions
+        function showProgramDetails(program) {
+            const programInfo = {
+                preschool: {
+                    title: 'Preschool Program',
+                    content: 'Our preschool program focuses on early childhood development through play-based learning, fostering curiosity and social skills in a nurturing environment.'
+                },
+                elementary: {
+                    title: 'Elementary Program',
+                    content: 'Our elementary program builds strong academic foundations while encouraging creativity and independent thinking through innovative teaching methods.'
+                },
+                juniorhigh: {
+                    title: 'Junior High School Program',
+                    content: 'Our junior high program prepares students for senior high with rigorous academics and leadership opportunities in a supportive environment.'
+                }
+            };
+            
+            const info = programInfo[program];
+            if (info) {
+                showToast(info.title, info.content, 'info');
+            }
+        }
+
+        function showEventDetails(event) {
+            const eventInfo = {
+                'foundation-day': {
+                    title: '10th Foundation Day',
+                    content: 'Join us for a celebration of excellence with performances, competitions, and community activities.'
+                },
+                'summer-promo': {
+                    title: 'Summer Break Promo',
+                    content: 'Take advantage of our special enrollment discounts and receive exclusive MIS merchandise.'
+                }
+            };
+            
+            const info = eventInfo[event];
+            if (info) {
+                showToast(info.title, info.content, 'info');
+            }
+        }
+
+        function scheduleEvaluation() {
+            showToast('Schedule Evaluation', 'Please call our Pediatric Therapy Center at (02) 123-4567 to schedule your appointment.', 'info');
+        }
+
+        function downloadAdmissionForms() {
+            showToast('Download Started', 'Admission forms are being prepared for download.', 'info');
+        }
+
+        function showAllEvents() {
+            showToast('All Events', 'This feature is coming soon.', 'info');
+        }
+
+        function openSocialLink(platform) {
+            const socialUrls = {
+                facebook: 'https://facebook.com/makwillsschool',
+                instagram: 'https://instagram.com/makwillsschool',
+                twitter: 'https://twitter.com/makwillsschool',
+                youtube: 'https://youtube.com/c/makwillsschool'
+            };
+            
+            const url = socialUrls[platform];
+            if (url) {
+                showToast('Opening Social Media', `Redirecting to our ${platform.charAt(0).toUpperCase() + platform.slice(1)} page...`, 'info');
+                setTimeout(() => window.open(url, '_blank'), 1000);
+            }
+        }
+
+        function showPrivacyPolicy() {
+            showToast('Privacy Policy', 'Our privacy policy outlines how we protect and use your personal information.', 'info');
+        }
+
+        function showTermsOfService() {
+            showToast('Terms of Service', 'Please read our terms and conditions for using our services.', 'info');
+        }
+
+        function showSitemap() {
+            showToast('Sitemap', 'Navigate through all pages and sections of our website easily.', 'info');
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize functions
+            initScrollAnimations();
+            initSmoothScrolling();
+            
+            // Add scroll listener for progress indicator
+            window.addEventListener('scroll', updateScrollProgress);
+            
+            // Form event listeners
+            document.getElementById('contact-form').addEventListener('submit', handleContactForm);
+            document.getElementById('enrollment-form').addEventListener('submit', handleEnrollmentForm);
+            document.getElementById('newsletter-form').addEventListener('submit', handleNewsletterForm);
+            
+            // Start hero image slider
+            setInterval(changeHeroBackground, 5000);
+            
+            // Close modal when clicking outside
+            document.getElementById('enrollment-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeEnrollmentModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeEnrollmentModal();
+                }
+            });
+        });
+
+        // Prevent forms from actually submitting (for demo purposes)
+        document.addEventListener('submit', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
+             
